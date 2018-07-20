@@ -1,0 +1,99 @@
+<font color='DarkSlateBlue'>
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN"
+    "http://www.w3.org/TR/html4/loose.dtd">
+
+<html>
+<head>
+<title>untitled</title>
+<script type="text/javascript">
+
+String.prototype.trim = function()
+{
+	return this.replace(/^\\s*|\\s*$/g, '');
+}
+
+function isEmpty(field)
+{
+	var re = /^\\s*$/;
+	return re.test(field.value);
+}
+
+function grpIt(obj)
+{
+	return (typeof obj[0] != 'undefined') ? obj : [obj];
+}
+
+function fewerChkd(min, grp)
+{
+	var checked = 0, i = grp.length;
+	do
+		if (grp[--i].checked)
+			if (++checked >= min)
+				return false;
+	while (i);
+	return true;
+}
+
+function checkform(e)
+{
+	var grp, focus_el = null, msg = '';
+	e.Eitem.value = e.Eitem.value.trim();
+	if (isEmpty(e.Eitem))
+	{
+		msg += "• Please fill in that 'item' thing.\
+";
+		focus_el = focus_el || e.Eitem;
+	}
+	grp = grpIt(e['playval[]']);
+	if (fewerChkd(1, grp))
+	{
+		msg += "• Please choose at least 1 play value.\
+";
+		focus_el = focus_el || grp[0];
+	}
+	grp = grpIt(e['ageval[]']);
+	if (fewerChkd(1, grp))
+	{
+		msg += "• Please choose at least 1 age value.\
+";
+		focus_el = focus_el || grp[0];
+	}
+	if (msg != '')
+	{
+		var prefix = "\
+To assist us in processing your form:\
+\
+";
+		var suffix = "\
+Kindly correct and resubmit. Thank you.\
+\
+";
+		alert(prefix + msg + suffix);
+		if (focus_el.focus)
+		{
+			focus_el.focus();
+			focus_el.select();
+		}
+		return false;
+	}
+	return true;
+}
+
+</script>
+</head>
+<body>
+<form action="update.php" name="form1" onSubmit="return checkform(this.elements)">
+<input type="text" name="Eitem" value="" /> item<br />
+<h4>Check at least one play value:</h4>
+<input type="checkbox" name="playval[]" value="1" />1<br />
+<input type="checkbox" name="playval[]" value="2" />2<br />
+<input type="checkbox" name="playval[]" value="3" />3<br />
+<h4>Check at least one age value:</h4>
+<input type="checkbox" name="ageval[]" value="1" />1<br />
+<input type="checkbox" name="ageval[]" value="2" />2<br />
+<input type="checkbox" name="ageval[]" value="3" />3<br /><br />
+<input type="submit" />
+</form>
+</body>
+</html>
+</font>
