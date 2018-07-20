@@ -8,3 +8,5 @@ import schema.sql
 Now open file dbh.inc.php change your username and password "if not set leave as it is.."
 
 Now every is set up open index file "localhost/iitrun"
+
+Contact 2016csb1064@iitrpr.ac.in  for any query
